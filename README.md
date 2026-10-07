@@ -93,6 +93,7 @@ Use the switcher in the top bar or `/settings`.
 - `/tickets/new` - Create ticket
 - `/tickets/[id]` - Ticket detail, comments, audit, linked logs/jobs, ticket agent
 - `/incidents` - Incident monitoring
+- `/incidents/new` - Declare an incident
 - `/incidents/[id]` - Incident detail and anomaly agent
 - `/logs` - Log explorer and fingerprint grouping
 - `/logs/[id]` - Structured log detail
@@ -118,14 +119,16 @@ The repository is split by logical module:
 
 ## Tests
 
-Core tests live in `tests/` and cover:
+Core tests live in `tests/`: 12 tests in 3 files (`agents.test.ts`, `domain.test.ts`, `integration.test.ts`). They cover:
 
 - Ticket status transitions
 - SLA calculations and SLA state
 - Ticket validation and tag normalization
+- Incident lifecycle transitions
 - Ticket summarization heuristics
 - Log anomaly scoring
 - Failed job investigation heuristics
+- Organization scoping, metadata redaction and pagination bounds (`integration.test.ts`)
 
 ## Known Limitations
 
@@ -138,5 +141,7 @@ Core tests live in `tests/` and cover:
 ## Recommended Learning Path
 
 Start with `docs/02-codebase-reading-guide.md`, then trace a ticket from `/tickets/new` through `apps/web/lib/actions.ts`, `packages/domain`, and `packages/db/prisma/schema.prisma`. After that, inspect `packages/agents` and run the tests while changing a heuristic.
+
+This repository is a snapshot of the baseline import of [elirc/3buildagenthelpdesk](https://github.com/elirc/3buildagenthelpdesk) (commit `88d7c99`), taken before that repository's 20-story backlog was merged as PRs #3-#22. None of those backlog features are in this code, so the routes and limitations above are current for this snapshot. To see how each story was built, read its PR in the maintained repository after designing it yourself.
 
 For sprint-style feature practice, follow `docs/sprint-roadmap.md`. It breaks the next set of product improvements into five training sprints with user stories, technical designs, implementation playbooks, and review guides.

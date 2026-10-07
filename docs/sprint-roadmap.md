@@ -1,5 +1,12 @@
 # Five-Sprint Feature Roadmap
 
+> **Status (2026-10-06):** None of these five sprints is implemented in this
+> snapshot. For example, there is no analytics, knowledge or notifications
+> route under `apps/web/app/`. This repository is a snapshot of the baseline import of [elirc/3buildagenthelpdesk](https://github.com/elirc/3buildagenthelpdesk) (commit `88d7c99`), taken before that repository's 20-story backlog was merged as PRs #3-#22. That backlog later built some of what
+> Sprints One, Three and Five describe (queue pagination, bulk triage, canned
+> replies, an analytics dashboard, escalation routing and CI), so its PRs are
+> useful to compare against after you build a sprint story here.
+
 This roadmap turns the Agentic Help Desk app into a realistic training project for a junior software engineer. The point is not just to add features. The point is to practice how real product work moves from user stories to design, implementation, tests, review, release, and retrospective learning.
 
 The app is already a TypeScript modular monolith with Next.js App Router pages, Prisma persistence, domain packages, deterministic agents, audit events, and Vitest coverage. The sprint docs below build on those existing boundaries instead of inventing a new architecture.

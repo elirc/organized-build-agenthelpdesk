@@ -44,12 +44,33 @@ Day 14: Prepare an architecture review: explain modules, tradeoffs, limitations,
 
 ## Small Code Modification Tasks
 
-- Add a new ticket category.
-- Add a new job type.
-- Add a new dashboard metric.
-- Add an incident status filter.
-- Add an audit metadata field.
-- Add a new agent limitation.
+Each task names where to start and how to know it worked:
+
+- **Add a new ticket category.** A category lives in three places:
+  `TICKET_CATEGORIES` in `packages/shared/src/index.ts:18`, the
+  `labelMaps.category` entry at `:92`, and the Prisma `TicketCategory` enum in
+  `packages/db/prisma/schema.prisma:35`. **Check**: the new category appears in
+  the new-ticket form (`apps/web/app/tickets/new/page.tsx:51-53`), a ticket
+  saved with it reloads correctly, and `npm run typecheck` passes. If you
+  missed the label, the compiler flags `labelMaps.category[category]`.
+- **Add a new job type.** Same pattern: `JOB_TYPES` at
+  `packages/shared/src/index.ts:41`, `labelMaps.jobType` at `:115`, and the
+  `JobType` enum at `schema.prisma:73`. **Check**: seed a job with the new type
+  and it renders on `/jobs` with a label, not a raw enum string.
+- **Add a new dashboard metric.** Follow how `apps/web/app/page.tsx` loads its
+  queries in one `Promise.all` (`:20`). **Check**: the metric changes when you
+  mutate the underlying data via the UI.
+- **Add an incident status filter.** Mirror the ticket queue, which reads
+  `status`, `priority` and `q` from `searchParams`
+  (`apps/web/app/tickets/page.tsx:12-24`). **Check**: the URL carries the
+  filter state and a page reload preserves it.
+- **Add an audit metadata field.** Pick one action in
+  `apps/web/lib/actions.ts` that calls `writeAuditEvent` (imported at `:21`).
+  **Check**: the new field shows in `/audit` for fresh events and old events
+  still render.
+- **Add a new agent limitation.** Each agent in `packages/agents/src` returns
+  a `limitations` array (the type is at `types.ts:27`). **Check**: the
+  limitation appears on `/agents/[id]` for a fresh run.
 
 ## Debugging Exercises
 
